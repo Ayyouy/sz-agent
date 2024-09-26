@@ -14,7 +14,7 @@ RUN npm cache clean --force
 RUN npm config set strict-ssl false
 
 # 安装项目依赖
-RUN npm install
+RUN npm install --legacy-peer-deps
 
 # 复制项目文件到工作目录
 COPY . .
