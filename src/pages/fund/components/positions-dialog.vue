@@ -11,7 +11,7 @@
               购买时间：<span>{{ fund.buyTime | timeFormat }}</span>
             </el-col>
             <el-col :span="4" class="text-right">
-              封锁期：<span>{{ fund.lockPortion }}天</span>
+              封锁期：<span>{{ fund.blackoutPeriod }}天</span>
             </el-col>
           </el-row>
           <el-row>

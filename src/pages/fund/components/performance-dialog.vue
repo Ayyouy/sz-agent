@@ -13,17 +13,17 @@
               :data="list"
               style="width: 100%">
               <el-table-column
-                prop="orderNum"
+                prop="realName"
                 :label="flag==0?'代理姓名/ID':'用户姓名/ID'">
                 <template slot-scope="scope">
-                  {{ scope.row.orderNum }}
+                  {{ scope.row.realName }}/{{ scope.row.userId }}
                 </template>
               </el-table-column>
               <el-table-column
-                prop="agentRealName"
+                prop="agentName"
                 label="归属代理/ID">
                 <template slot-scope="scope">
-                  {{ scope.row.realName }}/{{ scope.row.userId }}
+                  {{ scope.row.agentName }}/{{ scope.row.agentId }}
                 </template>
               </el-table-column>
               <el-table-column
@@ -34,24 +34,24 @@
                 </template>
               </el-table-column>
               <el-table-column
-                prop="amount"
+                prop="buyTotal"
                 :label="flag==0?'总购买金额':'购买金额'">
                 <template slot-scope="scope">
-                  {{ scope.row.amount }}
+                  {{ scope.row.buyTotal }}
                 </template>
               </el-table-column>
               <el-table-column
-                prop="balance"
+                prop="redTotal"
                 :label="flag==0?'总赎回金额':'赎回金额'">
                 <template slot-scope="scope">
-                  {{ scope.row.balance }}
+                  {{ scope.row.redTotal }}
                 </template>
               </el-table-column>
               <el-table-column
-                prop="addTime"
+                prop="redTotal"
                 label="净购买额">
                 <template slot-scope="scope">
-                  {{ scope.row.addTime }}
+                  {{ scope.row.buyTotal - scope.row.redTotal }}
                 </template>
               </el-table-column>
             </el-table>
@@ -77,7 +77,7 @@ export default {
       }
     }
   },
-  data() {
+  data () {
     return {
       dialogVisible: false,
       list: [],
@@ -87,7 +87,7 @@ export default {
     }
   },
   watch: {
-    info(val) {
+    info (val) {
       if (val) {
         this.list = this.info.data
         this.amounts = this.info.amounts

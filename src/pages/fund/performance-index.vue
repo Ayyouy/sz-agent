@@ -229,7 +229,7 @@ export default {
         this.$refs.performanceDialog.dialogVisible = true
         let amounts = 0
         data.data.forEach(item => {
-          amounts += item.amount
+          amounts += (item.buyTotal-item.redTotal)
         })
         this.detail = data
         this.detail.amounts = amounts
