@@ -24,13 +24,21 @@ axios.interceptors.request.use(
 // ajax请求回调之前拦截 对请求返回的信息做统一处理 比如error为401无权限则跳转到登陆界面
 axios.interceptors.response.use(
   response => {
-    switch (response.data.success) {
-      case false:
-        response.data.msg = '您还未登录,请先登录'
+    // switch (response.data.success) {
+    //   case false:
+    //     response.data.msg = '您还未登录,请先登录'
+    //     router.push('/login')
+    //     break
+    //   default:
+    //     break
+    // }
+    // return response
+    let data = response.data
+    if (data instanceof Object) {
+      if (data.status === 401) {
+        data.msg = '您还未登录,请先登录'
         router.push('/login')
-        break
-      default:
-        break
+      }
     }
     return response
   },
