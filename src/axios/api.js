@@ -4,11 +4,6 @@ import {post, get} from '@/axios/index'
 
 // 获取代理信息
 export function getAgentInfo(options) {
-  // let data = get('/agent/getAgentInfo.do', options)
-  // if (data.status === 0) {
-  //   data.data.token = this.$store.state.token
-  // }
-  // return data
   return get('/agent/getAgentInfo.do', options)
 }
 

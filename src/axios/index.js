@@ -13,7 +13,17 @@ axios.defaults.withCredentials = true // 表示跨域请求时是否需要使用
 // 在ajax发送之前拦截 比如对所有请求统一添加header token
 axios.interceptors.request.use(
   config => {
-    config.headers['token'] = localStorage.getItem('agent-token')
+    let url = config.url
+    // 1.url是登录，则token不用管了
+    // 2.url不是登录，则token必须为非空才行
+    if (url !== '/api/agent/login.do') {
+      let token = localStorage.getItem('agent-token')
+      if (token === undefined || token == null) {
+        router.push('/login')
+      } else {
+        config.headers['token'] = token
+      }
+    }
     return config
   },
   err => {
@@ -24,15 +34,6 @@ axios.interceptors.request.use(
 // ajax请求回调之前拦截 对请求返回的信息做统一处理 比如error为401无权限则跳转到登陆界面
 axios.interceptors.response.use(
   response => {
-    // switch (response.data.success) {
-    //   case false:
-    //     response.data.msg = '您还未登录,请先登录'
-    //     router.push('/login')
-    //     break
-    //   default:
-    //     break
-    // }
-    // return response
     let data = response.data
     if (data instanceof Object) {
       if (data.status === 401) {
