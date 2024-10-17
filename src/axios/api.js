@@ -138,6 +138,10 @@ export function detailPositions(options) {
 export function wallets(options) {
   return get('/api/fundWallet/list.do', options)
 }
+// 查询用户钱包
+export function walletById(options) {
+  return get('/api/fundWallet/findByUserId.do', options)
+}
 
 // 钱包之出金或转帐
 export function walletSend(options) {

@@ -38,12 +38,15 @@ axios.interceptors.response.use(
     if (data instanceof Object) {
       if (data.status === 401) {
         data.msg = '您还未登录,请先登录'
+        localStorage.clear()
         router.push('/login')
       }
     }
     return response
   },
   error => {
+    this.$message.error('服务器异常，请联系管理员')
+    localStorage.clear()
     return Promise.reject(error)
   }
 )
@@ -56,7 +59,7 @@ export default axios // 这句千万不能漏下！！！
  * @param data
  * @returns {Promise}
  */
-export function post(url, data = {}) {
+export function post (url, data = {}) {
   return new Promise((resolve, reject) => {
     axios.post(url, qs.stringify(data))
       .then(response => {
@@ -73,7 +76,7 @@ export function post(url, data = {}) {
  * @param data
  * @returns {Promise}
  */
-export function get(url, data = {}) {
+export function get (url, data = {}) {
   return new Promise((resolve, reject) => {
     axios.get(url, {params: data})
       .then(response => {

@@ -71,10 +71,11 @@
 
 <script>
 import * as api from '@/axios/api'
+import {walletById} from '../../axios/api'
 
 export default {
   props: {},
-  data() {
+  data () {
     return {
       form: {
         type: 0,
@@ -89,14 +90,14 @@ export default {
       list: []
     }
   },
-  created() {
+  created () {
     this.$store.state.activeIndex = 'wallet'
   },
-  mounted() {
+  mounted () {
     this.getWallets()
   },
   methods: {
-    selectChange(val) {
+    selectChange (val) {
       let result = val.split('-')
       console.log(result)
       this.form.inCardNum = result[0]
@@ -104,7 +105,7 @@ export default {
       this.form.cardName = result[1]
       this.form.inUserId = result[2]
     },
-    async inputChange() {
+    async inputChange () {
       this.list = []
       let opt1 = {
         userId: this.form.cardPerson
@@ -125,15 +126,18 @@ export default {
         })
       }
     },
-    async getWallets() {
-      let data = await api.wallets()
+    async getWallets () {
+      let opts = {
+        userId: this.$store.state.userInfo.id
+      }
+      let data = await api.walletById(opts)
       if (data.status === 0) {
-        this.detail = data.data.list[0]
+        this.detail = data.data
       } else {
         this.$message.error(data.msg)
       }
     },
-    async submit() {
+    async submit () {
       if (this.form.type !== 0 && this.form.type !== 1) {
         this.$message.error('类型出错')
         return false
