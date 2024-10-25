@@ -73,7 +73,7 @@
             label="本月差额">
             <template slot-scope="scope">
               <span v-if="scope.row.frType==1">
-                 {{ scope.row.monthIncome - scope.row.lastMonthIncome }}
+                 ${{ scope.row.balanceMonthIncome }}
               </span>
             </template>
           </el-table-column>
@@ -85,14 +85,11 @@
             </template>
           </el-table-column>
           <el-table-column
-            prop="income"
+            prop="allIncome"
             label="收益额">
             <template slot-scope="scope">
-             <span v-if="scope.row.frType==1">
-                 ${{ (scope.row.monthIncome - scope.row.lastMonthIncome) * scope.row.frRatio / 100 }}
-              </span>
-              <span v-else-if="scope.row.frType==0">
-                ${{ scope.row.monthIncome * scope.row.frRatio / 100 }}
+             <span>
+                 ${{ scope.row.allIncome }}
               </span>
             </template>
           </el-table-column>
@@ -142,7 +139,7 @@ export default {
     PerformanceDialog
   },
   props: {},
-  data() {
+  data () {
     return {
       form: {
         frType: '',
@@ -160,12 +157,12 @@ export default {
       loading: false
     }
   },
-  mounted() {
+  mounted () {
     this.lastTwelveMonths()
     this.getList()
   },
   methods: {
-    lastTwelveMonths() {
+    lastTwelveMonths () {
       let date = new Date()
       let currentYear = date.getFullYear()
       let currentMonth = date.getMonth() + 1
@@ -181,19 +178,19 @@ export default {
       }
       // this.months.reverse()
     },
-    handleSizeChange(val) {
+    handleSizeChange (val) {
       this.form.pageSize = val
       this.getList()
     },
-    handleCurrentChange(val) {
+    handleCurrentChange (val) {
       this.form.pageNum = val
       this.getList()
     },
-    onSubmit() {
+    onSubmit () {
       this.form.pageNum = 1
       this.getList()
     },
-    async getList() {
+    async getList () {
       if (this.loading) {
         return
       }
@@ -209,13 +206,23 @@ export default {
       }
       let data = await api.incomes(opts)
       if (data.status === 0) {
+        data.data.list.forEach(item => {
+          item.monthIncome = Number(item.monthIncome).toFixed(3)
+          item.lastMonthIncome = Number(item.lastMonthIncome).toFixed(3)
+          item.balanceMonthIncome = item.monthIncome - item.lastMonthIncome
+          if (item.frType === 0 || item.frType === '0') {
+            item.allIncome = item.monthIncome * item.frRatio / 100
+          } else {
+            item.allIncome = (item.monthIncome - item.lastMonthIncome) * item.frRatio / 100
+          }
+        })
         this.list = data.data
       } else {
         this.$message.error(data.msg)
       }
       this.loading = false
     },
-    showDetailDialog(val) {
+    showDetailDialog (val) {
       let opts = {
         type: val.frType,
         month: val.farMonth,
@@ -223,13 +230,13 @@ export default {
       }
       this.getDetailPerformance(opts)
     },
-    async getDetailPerformance(opts) {
+    async getDetailPerformance (opts) {
       let data = await api.incomesDetail(opts)
       if (data.status === 0) {
         this.$refs.performanceDialog.dialogVisible = true
         let amounts = 0
         data.data.forEach(item => {
-          amounts += (item.buyTotal-item.redTotal)
+          amounts += (item.buyTotal - item.redTotal)
         })
         this.detail = data
         this.detail.amounts = amounts

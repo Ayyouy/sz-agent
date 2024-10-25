@@ -75,21 +75,21 @@
             prop="perValue"
             label="每份净值">
             <template slot-scope="scope">
-              {{ scope.row.perValue }}
+              ${{ scope.row.perValue }}
             </template>
           </el-table-column>
           <el-table-column
             prop="buyPortion"
             label="购买金额(份额)">
             <template slot-scope="scope">
-              {{ scope.row.buyPortion }}
+              ${{ Number(scope.row.buyPortion*scope.row.perValue).toFixed(3) }}（{{ scope.row.buyPortion }}份）
             </template>
           </el-table-column>
           <el-table-column
             prop="redeemedPortion"
             label="已赎回金额(份额)">
             <template slot-scope="scope">
-              {{ scope.row.redeemedPortion }}
+             ${{Number(scope.row.redeemedPortion*scope.row.perValue).toFixed(3)}}（{{ scope.row.redeemedPortion }}份）
             </template>
           </el-table-column>
           <el-table-column
@@ -110,21 +110,21 @@
             prop="income"
             label="获得总收益">
             <template slot-scope="scope">
-              ${{ scope.row.income }}
+              ${{ Number(scope.row.income).toFixed(3) }}
             </template>
           </el-table-column>
           <el-table-column
             prop="subscriptionFee"
             label="申购手续费">
             <template slot-scope="scope">
-              {{ scope.row.subscriptionFee }}
+              ${{ Number(scope.row.subscriptionFee).toFixed(3) }}
             </template>
           </el-table-column>
           <el-table-column
             prop="backEndLoad"
             label="赎回手续费">
             <template slot-scope="scope">
-              {{scope.row.backEndLoad}}
+              ${{Number(scope.row.backEndLoad).toFixed(3)}}
             </template>
           </el-table-column>
           <el-table-column
