@@ -977,14 +977,14 @@
   color: #000;
   border: none;
   border-radius: 3px;
-  padding: 12px 20px;
-  width: 15%;
+  padding: 2px 2px;
+  width: 30%;
   margin-right: 8px;
   outline: 0
 }
 
 .lowin .lowin-box .lowin-select option {
-  width: 15%;
+  width: 30%;
 }
 
 .lowin .lowin-box .lowin-btn {
