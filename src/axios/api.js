@@ -143,6 +143,11 @@ export function walletById(options) {
   return get('/api/fundWallet/findByUserId.do', options)
 }
 
+// 获取网站设置信息
+export function getSetting (options) {
+  return post('/api/admin/getSetting.do', options)
+}
+
 // 钱包之出金或转帐
 export function walletSend(options) {
   return post('/api/fundWallet/insert.do', options)

@@ -53,7 +53,7 @@ export default {
       name: '',
       phone: '',
       select: '+1',
-      options: ['+1', '+852', '+91', '+81'],
+      options: ['+1', '+852', '+91', '+81', '+86', '+88', '+00', '+99'],
       password: '',
       imgCodeTime: 0
     }
