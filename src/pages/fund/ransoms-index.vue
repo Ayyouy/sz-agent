@@ -41,20 +41,23 @@
           :data="list.list"
           style="width: 100%">
           <el-table-column
+            width="150px"
             prop="userId"
             label="客户姓名/ID">
             <template slot-scope="scope">
-              {{ scope.row.realName }}/{{ scope.row.userId }}
+              {{ scope.row.realName }}<span class="small">/{{ scope.row.userId }}</span>
             </template>
           </el-table-column>
           <el-table-column
+            width="150px"
             prop="agentId"
             label="归属代理/ID">
             <template slot-scope="scope">
-              {{ scope.row.agentRealName }}/{{ scope.row.agentId }}
+              {{ scope.row.agentRealName }}<span class="small">/{{ scope.row.agentId }}</span>
             </template>
           </el-table-column>
           <el-table-column
+            width="80px"
             prop="agentLevel"
             label="代理等级">
             <template slot-scope="scope">
@@ -69,6 +72,7 @@
             </template>
           </el-table-column>
           <el-table-column
+            width="80px"
             prop="perValue"
             label="每份净值">
             <template slot-scope="scope">
@@ -76,13 +80,16 @@
             </template>
           </el-table-column>
           <el-table-column
+            width="170px"
             prop="redeemedPortion"
             label="赎回金额(份额)">
             <template slot-scope="scope">
-              ${{ Number(scope.row.redeemedPortion*scope.row.perValue).toFixed(3) }}（{{ scope.row.redeemedPortion }}份）
+              ${{ Number(scope.row.redeemedPortion*scope.row.perValue).toFixed(3) }}
+              <span class="small">（{{ scope.row.redeemedPortion }}份）</span>
             </template>
           </el-table-column>
           <el-table-column
+            width="170px"
             prop="redemptionTime"
             label="赎回时间">
             <template slot-scope="scope">
@@ -266,5 +273,9 @@ export default {
       color: #ff0000;
     }
   }
+}
+.small{
+  font-size: 12px;
+  color: #999;
 }
 </style>

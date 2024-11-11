@@ -44,20 +44,23 @@
           :data="list.list"
           style="width: 100%">
           <el-table-column
+            width="145px"
             prop="userId"
             label="客户姓名/ID">
             <template slot-scope="scope">
-              {{ scope.row.realName }}/{{ scope.row.userId }}
+              {{ scope.row.realName }}<span class="small">/{{ scope.row.userId }}</span>
             </template>
           </el-table-column>
           <el-table-column
+            width="145px"
             prop="agentId"
             label="归属代理/ID">
             <template slot-scope="scope">
-              {{ scope.row.agentRealName }}/{{ scope.row.agentId }}
+              {{ scope.row.agentRealName }}<span class="small">/{{ scope.row.agentId }}</span>
             </template>
           </el-table-column>
           <el-table-column
+            width="80px"
             prop="agentLevel"
             label="代理等级">
             <template slot-scope="scope">
@@ -72,6 +75,7 @@
             </template>
           </el-table-column>
           <el-table-column
+            width="80px"
             prop="perValue"
             label="每份净值">
             <template slot-scope="scope">
@@ -79,20 +83,23 @@
             </template>
           </el-table-column>
           <el-table-column
+            width="150px"
             prop="buyPortion"
             label="购买金额(份额)">
             <template slot-scope="scope">
-              ${{ Number(scope.row.buyPortion*scope.row.perValue).toFixed(3) }}（{{ scope.row.buyPortion }}份）
+              ${{ Number(scope.row.buyPortion*scope.row.perValue).toFixed(3) }}<span class="small">（{{ scope.row.buyPortion }}份）</span>
             </template>
           </el-table-column>
           <el-table-column
+            width="150px"
             prop="redeemedPortion"
             label="已赎回金额(份额)">
             <template slot-scope="scope">
-             ${{Number(scope.row.redeemedPortion*scope.row.perValue).toFixed(3)}}（{{ scope.row.redeemedPortion }}份）
+             ${{Number(scope.row.redeemedPortion*scope.row.perValue).toFixed(3)}}<span class="small">（{{ scope.row.redeemedPortion }}份）</span>
             </template>
           </el-table-column>
           <el-table-column
+            width="80px"
             prop="blackoutPeriod"
             label="每期天数">
             <template slot-scope="scope">
@@ -100,6 +107,7 @@
             </template>
           </el-table-column>
           <el-table-column
+            width="170px"
             prop="buyTime"
             label="购买时间">
             <template slot-scope="scope">
@@ -136,7 +144,7 @@
           </el-table-column>
           <el-table-column
             fixed="right"
-            width="60px"
+            width="50px"
             prop="isLock"
             label="详情">
             <template slot-scope="scope">
@@ -292,5 +300,9 @@ export default {
       color: #ff0000;
     }
   }
+}
+.small{
+  font-size: 12px;
+  color: #999;
 }
 </style>

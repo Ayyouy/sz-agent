@@ -13668,6 +13668,11 @@ a {
   font-weight: 700
 }
 
+.el-table__body .small {
+  font-size: 12px;
+  color: #959595
+}
+
 .el-dialog__body .small {
   font-size: 12px;
   color: #999

@@ -41,6 +41,7 @@
             </template>
           </el-table-column>
           <el-table-column
+            width="150px"
             prop="agentName"
             label="代理姓名/ID">
             <template slot-scope="scope">
@@ -48,6 +49,7 @@
             </template>
           </el-table-column>
           <el-table-column
+            width="80px"
             prop="floatRate"
             label="代理等级">
             <template slot-scope="scope">
