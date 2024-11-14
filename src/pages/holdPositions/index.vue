@@ -2,18 +2,18 @@
   <el-container>
     <el-main>
       <div class="content-wrapper">
-        <Container v-if="panel=== '1'" :type="1"></Container>
-        <Container2 v-if="panel=== '2'" :type="0"></Container2>
-        <Container3 v-if="panel=== '3'" :type="1"></Container3>
-        <Container4 v-if="panel=== '4'" :type="0"></Container4>
-        <Container5 v-if="panel=== '5'" :type="1"></Container5>
-        <Container6 v-if="panel=== '6'" :type="0"></Container6>
+        <Container1 v-if="panel=== '1'"></Container1>
+        <Container2 v-if="panel=== '2'"></Container2>
+        <Container3 v-if="panel=== '3'"></Container3>
+        <Container4 v-if="panel=== '4'"></Container4>
+        <Container5 v-if="panel=== '5'"></Container5>
+        <Container6 v-if="panel=== '6'"></Container6>
       </div>
     </el-main>
   </el-container>
 </template>
 <script>
-import Container from './components/table-hold.vue'
+import Container1 from './components/table-hold.vue'
 import Container2 from './components/table-sell.vue'
 import Container3 from './components/indextable-hold.vue'
 import Container4 from './components/indextable-sell.vue'
@@ -22,38 +22,25 @@ import Container6 from './components/futurestable-sell.vue'
 
 export default {
   components: {
-    Container,
+    Container1,
     Container2,
     Container3,
     Container4,
     Container5,
     Container6
   },
-  props: {},
-  data() {
+  data () {
     return {
-      activetype: 'first',
-      panel: '1'
+      panel: this.$route.query.type
     }
   },
   watch: {
-    $route(val) {
-      if (val.query.type) {
-        this.panel = val.query.type
-      }
+    $route () {
+      this.panel = this.$route.query.type
     }
   },
-  computed: {},
-  methods: {
-    handleClick() {
-
-    }
-  },
-  created() {
+  created () {
     this.$store.state.activeIndex = 'holdPositions'
-  },
-  mounted() {
-
   }
 }
 </script>

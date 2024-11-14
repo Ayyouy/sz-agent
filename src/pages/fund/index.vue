@@ -2,9 +2,9 @@
   <el-container>
     <el-main>
       <div class="content-wrapper">
-        <Container1 v-if="panel=== '1'" :type="1"></Container1>
-        <Container2 v-if="panel=== '2'" :type="0"></Container2>
-        <Container3 v-if="panel=== '3'" :type="1"></Container3>
+        <Container1 v-if="panel=== '1'"></Container1>
+        <Container2 v-if="panel=== '2'"></Container2>
+        <Container3 v-if="panel=== '3'"></Container3>
       </div>
     </el-main>
   </el-container>
@@ -20,18 +20,14 @@ export default {
     Container2,
     Container3
   },
-  props: {},
   data () {
     return {
-      activetype: 'first',
-      panel: '1'
+      panel: this.$route.query.type
     }
   },
   watch: {
-    $route (val) {
-      if (val.query.type) {
-        this.panel = val.query.type
-      }
+    $route () {
+      this.panel = this.$route.query.type
     }
   },
   created () {

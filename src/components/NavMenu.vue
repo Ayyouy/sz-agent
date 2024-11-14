@@ -33,17 +33,12 @@
           <i class="el-icon-user"></i>
           <span slot="title">用户管理</span>
         </el-menu-item>
-        <!--        <el-menu-item index="10" @click="$router.push('/money')">-->
-        <!--          <i class="el-icon-wallet"></i>-->
-        <!--          <span slot="title">钱包管理</span>-->
-        <!--        </el-menu-item>-->
         <el-menu-item index="4" @click="$router.push('/agent')">
           <i class="el-icon-set-up"></i>
           <span slot="title">代理管理</span>
         </el-menu-item>
         <el-menu-item index="41" @click="$router.push('/agentcyFee')">
           <i class="el-icon-data-line"></i>
-          <!--  原利润明细，改为交易佣金    -->
           <span slot="title">交易佣金</span>
         </el-menu-item>
         <el-menu-item index="5" @click="$router.push('/agentcyFee')">
@@ -87,22 +82,12 @@
         <el-menu-item index="9" @click="$router.push('/exit')">
           <i class="el-icon-takeaway-box"></i>
           <span slot="title">
-                    <el-badge :value="outMoneyOrder" class="item-mark">
-                    出金记录
-                    </el-badge>
-                </span>
+            <el-badge :value="outMoneyOrder" class="item-mark">出金记录</el-badge>
+          </span>
         </el-menu-item>
-        <!--        <el-menu-item index="11" @click="$router.push('/capital')">-->
-        <!--          <i class="el-icon-edit-outline"></i>-->
-        <!--          <span slot="title">-->
-        <!--            <el-badge class="item-mark">资金记录</el-badge>-->
-        <!--          </span>-->
-        <!--        </el-menu-item>-->
         <el-menu-item index="11" @click="$router.push('/wallet')">
           <i class="el-icon-wallet"></i>
-          <span slot="title">
-            <el-badge class="item-mark">钱包</el-badge>
-          </span>
+          <span slot="title">钱包</span>
         </el-menu-item>
         <el-submenu index="12">
           <template slot="title">
@@ -130,8 +115,7 @@
 import * as api from '@/axios/api'
 
 export default {
-  name: "NavMenu",
-  components: {},
+  name: 'NavMenu',
   props: {
     index: {
       type: Array
@@ -144,7 +128,7 @@ export default {
       default: false
     }
   },
-  data() {
+  data () {
     return {
       contentStyleObj: {
         height: ''
@@ -152,16 +136,16 @@ export default {
       outMoneyOrder: 0// 出金待审核金额
     }
   },
-  created() {
+  created () {
     window.addEventListener('resize', this.getHeight)
     this.getHeight()
     this.getOutMoneyOrderNum()
   },
   methods: {
-    getHeight() {
+    getHeight () {
       this.contentStyleObj.height = window.innerHeight - 62 + 'px'
     },
-    async getOutMoneyOrderNum() {
+    async getOutMoneyOrderNum () {
       // 获取出金订单未处理的条数
       let opts = {
         state: 0,

@@ -153,8 +153,13 @@ export default {
   components: {
     RansomsDialog
   },
-  props: {},
-  data() {
+  props: {
+    type: {
+      type: Number,
+      default: 1
+    }
+  },
+  data () {
     return {
       form: {
         fundName: '',
@@ -174,24 +179,24 @@ export default {
       loading: false
     }
   },
-  mounted() {
+  mounted () {
     this.getFunds()
     this.getList()
   },
   methods: {
-    handleSizeChange(val) {
+    handleSizeChange (val) {
       this.form.pageSize = val
       this.getList()
     },
-    handleCurrentChange(val) {
+    handleCurrentChange (val) {
       this.form.pageNum = val
       this.getList()
     },
-    onSubmit() {
+    onSubmit () {
       this.form.pageNum = 1
       this.getList()
     },
-    async getFunds() {
+    async getFunds () {
       let opts = {
         fName: ''
       }
@@ -202,7 +207,7 @@ export default {
         this.$message.error(data.msg)
       }
     },
-    async getList() {
+    async getList () {
       if (this.loading) {
         return
       }
@@ -226,10 +231,10 @@ export default {
       }
       this.loading = false
     },
-    showDetailDialog(val) {
+    showDetailDialog (val) {
       this.getDetailPosition(val)
     },
-    async getDetailPosition(val) {
+    async getDetailPosition (val) {
       let opts = {
         id: val
       }
@@ -247,7 +252,7 @@ export default {
         this.$message.error(data.msg)
       }
     },
-    currentSel(val) {
+    currentSel (val) {
       this.form.fundId = val.id
       this.form.fundName = val.name
     }

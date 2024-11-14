@@ -16,6 +16,8 @@ import Entry from '@/pages/entry/index'
 import Exit from '@/pages/exit/index'
 import Login from '@/pages/login/index'
 
+const _import = require('./import_production.js')
+
 Vue.use(Router)
 
 export default new Router({

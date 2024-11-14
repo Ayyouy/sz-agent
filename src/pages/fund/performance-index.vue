@@ -143,7 +143,12 @@ export default {
   components: {
     PerformanceDialog
   },
-  props: {},
+  props: {
+    type: {
+      type: Number,
+      default: 1
+    }
+  },
   data () {
     return {
       form: {
