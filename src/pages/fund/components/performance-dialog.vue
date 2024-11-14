@@ -1,10 +1,21 @@
 <template>
   <div class="wrapper">
-    <el-dialog :title="flag==0?'层级奖详情列表':'团队奖详情列表'" :visible.sync="dialogVisible" width="60%">
+    <el-dialog title="团队奖详情" :visible.sync="dialogVisibleZero" width="60%">
       <div>
-        <el-row style="margin-bottom: 10px;">
+        <el-row style="margin-bottom: 10px">
           <el-col :span="24">
             <span>{{ month }}</span>
+          </el-col>
+        </el-row>
+        <el-row style="margin-bottom: 10px">
+          <el-col :span="8">
+            <span>本月持仓额：${{ amounts }}</span>
+          </el-col>
+          <el-col :span="8">
+            <span>差额：${{ ducAmounts }}</span>
+          </el-col>
+          <el-col :span="8">
+            <span>奖励比例：{{ frRatio }}%</span>
           </el-col>
         </el-row>
         <el-card class="box-card">
@@ -14,54 +25,103 @@
               style="width: 100%">
               <el-table-column
                 prop="realName"
-                :label="flag==0?'代理姓名/ID':'用户姓名/ID'">
+                label="用户姓名/ID">
                 <template slot-scope="scope">
-                  {{ scope.row.realName }}/{{ scope.row.userId }}
+                  {{ scope.row.realName }}<span class="small">/{{ scope.row.userId }}</span>
                 </template>
               </el-table-column>
               <el-table-column
                 prop="agentName"
                 label="归属代理/ID">
                 <template slot-scope="scope">
-                  {{ scope.row.agentName }}/{{ scope.row.agentId }}
+                  {{ scope.row.agentName }}<span class="small">/{{ scope.row.agentId }}</span>
                 </template>
               </el-table-column>
               <el-table-column
                 prop="agentLevel"
                 label="代理等级">
                 <template slot-scope="scope">
-                  {{ scope.row.agentLevel + 1 }}级
+                  {{ Number.parseInt(scope.row.agentLevel) + 1 }}级
                 </template>
               </el-table-column>
               <el-table-column
-                prop="buyTotal"
-                :label="flag==0?'总购买金额':'购买金额'">
+                prop="lastMonthIncome"
+                label="上月持仓额">
                 <template slot-scope="scope">
-                  {{ scope.row.buyTotal }}
+                  ${{ Number(scope.row.lastMonthIncome).toFixed(2) }}
                 </template>
               </el-table-column>
               <el-table-column
-                prop="redTotal"
-                :label="flag==0?'总赎回金额':'赎回金额'">
+                prop="monthIncome"
+                label="本月持仓额">
                 <template slot-scope="scope">
-                  {{ scope.row.redTotal }}
+                  ${{ Number(scope.row.monthIncome).toFixed(2) }}
+                </template>
+              </el-table-column>
+              <!--              <el-table-column-->
+              <!--                prop="income"-->
+              <!--                label="差额">-->
+              <!--                <template slot-scope="scope">-->
+              <!--                  ${{ Number(scope.row.monthIncome - scope.row.lastMonthIncome).toFixed(2) }}-->
+              <!--                </template>-->
+              <!--              </el-table-column>-->
+            </el-table>
+          </div>
+        </el-card>
+      </div>
+    </el-dialog>
+    <el-dialog title="层级奖详情" :visible.sync="dialogVisibleOne" width="60%">
+      <div>
+        <el-row style="margin-bottom: 10px;">
+          <el-col :span="12">
+            <span>{{ month }}</span>
+          </el-col>
+          <el-col :span="12" class="text-right">
+            <span>合计：${{ amounts }}</span>
+          </el-col>
+        </el-row>
+        <el-card class="box-card">
+          <div class="table">
+            <el-table
+              :data="list"
+              style="width: 100%">
+              <el-table-column
+                prop="realName"
+                label="代理姓名/ID">
+                <template slot-scope="scope">
+                  {{ scope.row.realName }}<span class="small">/{{ scope.row.userId }}</span>
                 </template>
               </el-table-column>
               <el-table-column
-                prop="redTotal"
-                label="净购买额">
+                prop="ID"
+                label="账号">
                 <template slot-scope="scope">
-                  {{ scope.row.buyTotal - scope.row.redTotal }}
+                </template>
+              </el-table-column>
+              <el-table-column
+                prop="agentName"
+                label="归属代理/ID">
+                <template slot-scope="scope">
+                  {{ scope.row.agentName }}<span class="small">/{{ scope.row.agentId }}</span>
+                </template>
+              </el-table-column>
+              <el-table-column
+                prop="agentLevel"
+                label="代理等级">
+                <template slot-scope="scope">
+                  {{ Number.parseInt(scope.row.agentLevel) + 1 }}级
+                </template>
+              </el-table-column>
+              <el-table-column
+                prop="monthIncome"
+                label="业绩">
+                <template slot-scope="scope">
+                  ${{ Number(scope.row.monthIncome).toFixed(2) }}
                 </template>
               </el-table-column>
             </el-table>
           </div>
         </el-card>
-        <el-row>
-          <el-col :span="24" class="text-right" style="margin-top: 20px;">
-            总收益：<span>{{ amounts }}</span>
-          </el-col>
-        </el-row>
       </div>
     </el-dialog>
   </div>
@@ -79,11 +139,13 @@ export default {
   },
   data () {
     return {
-      dialogVisible: false,
+      dialogVisibleZero: false,
+      dialogVisibleOne: false,
       list: [],
       amounts: 0,
-      flag: 0,
-      month: ''
+      ducAmounts: 0,
+      month: '',
+      frRatio: ''
     }
   },
   watch: {
@@ -91,8 +153,9 @@ export default {
       if (val) {
         this.list = this.info.data
         this.amounts = this.info.amounts
-        this.flag = this.info.type
+        this.ducAmounts = this.info.ducAmounts
         this.month = this.info.month
+        this.frRatio = this.info.frRatio
       }
     }
   }
