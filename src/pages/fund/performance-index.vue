@@ -45,53 +45,56 @@
             prop="agentName"
             label="代理姓名/ID">
             <template slot-scope="scope">
-              {{ scope.row.agentName }}/{{ scope.row.agentId }}
+              {{ scope.row.agentName }}<span class="small">/{{ scope.row.agentId }}</span>
             </template>
           </el-table-column>
           <el-table-column
             width="80px"
-            prop="floatRate"
+            prop="agentLevel"
             label="代理等级">
             <template slot-scope="scope">
               {{ scope.row.agentLevel + 1 }}级
             </template>
           </el-table-column>
           <el-table-column
-            prop="transState"
+            prop="lastMonthIncome"
             label="上月业绩">
             <template slot-scope="scope">
-              ${{ scope.row.lastMonthIncome }}
-            </template>
-          </el-table-column>
-          <el-table-column
-            prop="transState"
-            label="本月业绩">
-            <template slot-scope="scope">
-              ${{ scope.row.monthIncome }}
+              ${{ Number(scope.row.lastMonthIncome).toFixed(2) }}
             </template>
           </el-table-column>
           <el-table-column
             prop="monthIncome"
-            label="本月差额">
+            label="本月业绩">
+            <template slot-scope="scope">
+              ${{ Number(scope.row.monthIncome).toFixed(2) }}
+            </template>
+          </el-table-column>
+          <el-table-column
+            prop="monthIncome"
+            label="差额">
             <template slot-scope="scope">
               <span v-if="scope.row.frType==1">
-                 ${{ scope.row.balanceMonthIncome }}
+                 ${{ Number(scope.row.monthIncome-scope.row.lastMonthIncome).toFixed(2) }}
               </span>
             </template>
           </el-table-column>
           <el-table-column
-            prop="transState"
+            prop="frRatio"
             label="奖励比例">
             <template slot-scope="scope">
               {{ scope.row.frRatio }}%
             </template>
           </el-table-column>
           <el-table-column
-            prop="allIncome"
+            prop="income"
             label="收益额">
             <template slot-scope="scope">
-             <span>
-                 ${{ scope.row.allIncome }}
+             <span v-if="scope.row.frType==0">
+                 ${{ Number((scope.row.monthIncome - scope.row.lastMonthIncome) * scope.row.frRatio / 100).toFixed(2) }}
+              </span>
+              <span v-else-if="scope.row.frType==1">
+                ${{ Number(scope.row.monthIncome * scope.row.frRatio / 100).toFixed(2) }}
               </span>
             </template>
           </el-table-column>
@@ -100,7 +103,7 @@
             label="奖励类型">
             <template slot-scope="scope">
               <el-tag :type="scope.row.frType==1?'':'warning'">
-                {{ scope.row.frType == 1 ? '团队奖' : '层级奖' }}
+                {{ scope.row.frType == 0 ? '团队奖' : '层级奖' }}
               </el-tag>
             </template>
           </el-table-column>
