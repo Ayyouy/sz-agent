@@ -8,23 +8,14 @@
   </el-container>
 </template>
 <script>
-import Container from './components/table.vue'
+import Container from './components/table-rebate.vue'
 
 export default {
   components: {
     Container
   },
-  props: {},
-  data () {
-    return {}
-  },
-  watch: {},
-  computed: {},
-  methods: {},
   created () {
-    this.$store.state.activeIndex = 'agentcyFee'
-  },
-  mounted () {
+    this.$store.state.activeIndex = 'rebate'
   }
 }
 </script>

@@ -39,64 +39,92 @@
           show-summary
           :summary-method="getSummaries"
           style="width: 100%">
-          <!-- <el-table-column
-            prop="bankNo"
-            label="订单号">
-          </el-table-column> -->
-          <el-table-column
-            prop="userId"
-            width="80px"
-            label="用户id">
-          </el-table-column>
-          <el-table-column
-            prop="nickName"
-            width="80px"
-            label="用户名">
-          </el-table-column>
-          <el-table-column
-            prop="withAmt"
-            label="出金金额">
-          </el-table-column>
-          <el-table-column
-            prop="withFee"
-            label="手续费">
-          </el-table-column>
-          <el-table-column
-            width="100px"
-            prop="withStatus"
-            label="状态">
+          <el-table-column prop="nickName" width="120px" label="用户名/id">
             <template slot-scope="scope">
               <p>
-              <span
-                :class="scope.row.withStatus==1?'green':scope.row.withStatus==2?'red':scope.row.withStatus==0?'blue':'yellow'">
-                <i v-if="scope.row.withStatus==1" class="iconfont icon-zhengchang"></i>
-                <i v-if="scope.row.withStatus==2" class="iconfont icon-failure"></i>
-                <i v-if="scope.row.withStatus==3" class="iconfont icon-failure"></i>
-                <i v-if="scope.row.withStatus==0" class="iconfont icon-dengdai"></i>
-                {{scope.row.withStatus==1?'成功':scope.row.withStatus==2?'失败':scope.row.withStatus==0?'审核中':'取消'}}
-              </span>
+                {{ scope.row.nickName }}
+                <span class="small"> ({{ scope.row.userId }}) </span>
               </p>
             </template>
           </el-table-column>
-          <el-table-column
-            width="180px"
-            prop="applyTime"
-            label="申请时间">
+          <el-table-column width="100px" prop="dd" label="出金方式">
             <template slot-scope="scope">
-            <span>
-              {{scope.row.applyTime | timeFormat}}
-            </span>
+              {{ scope.row.currency }}
             </template>
           </el-table-column>
           <el-table-column
             width="180px"
-            prop="transTime"
-            label="出金时间">
+            prop="withAmt"
+            label="出金金额(本国货币)"
+          >
             <template slot-scope="scope">
-            <span>
-              {{scope.row.transTime | timeFormat}}
-            </span>
+              {{ (scope.row.symbol ? scope.row.symbol: '') + '' + scope.row.withAmt }}
             </template>
+          </el-table-column>
+          <el-table-column width="100px" prop="rate" label="汇率">
+          </el-table-column>
+          <el-table-column width="100px" prop="realAmt" label="应提金额$">
+          </el-table-column>
+          <el-table-column width="100px" prop="ff" label="实提金额$">
+            <template slot-scope="scope">
+              {{ scope.row.realAmt - scope.row.withFee }}
+            </template>
+          </el-table-column>
+          <el-table-column width="100px" prop="withFee" label="手续费">
+          </el-table-column>
+          <el-table-column width="180px" prop="applyTime" label="申请时间">
+            <template slot-scope="scope">
+              <span>
+                {{ scope.row.applyTime }}
+              </span>
+            </template>
+          </el-table-column>
+          <el-table-column width="180px" prop="transTime" label="支付时间">
+            <template slot-scope="scope">
+              <span>
+                {{ scope.row.transTime }}
+              </span>
+            </template>
+          </el-table-column>
+          <el-table-column width="120px" prop="withStatus" label="状态">
+            <template slot-scope="scope">
+              <p>
+                <span
+                  :class="
+                    scope.row.withStatus == 1
+                      ? 'green'
+                      : scope.row.withStatus == 2
+                      ? 'red'
+                      : scope.row.withStatus == 0
+                      ? 'blue'
+                      : 'yellow'
+                  "
+                >
+                  <i
+                    v-if="scope.row.withStatus == 1"
+                    class="iconfont icon-zhengchang"
+                  ></i>
+                  <i
+                    v-if="scope.row.withStatus == 2"
+                    class="iconfont icon-failure"
+                  ></i>
+                  <i
+                    v-if="scope.row.withStatus == 3"
+                    class="iconfont icon-failure"
+                  ></i>
+                  <i
+                    v-if="scope.row.withStatus == 0"
+                    class="iconfont icon-dengdai"
+                  ></i>
+                  {{ scope.row.withStatus == 0 ? '审核中':''  }}
+                  {{ scope.row.withStatus == 1 ? '审核成功':''  }}
+                  {{ scope.row.withStatus == 2 ? '审核失败':''  }}
+                  {{ scope.row.withStatus == 3 ? '取消':''  }}
+                </span>
+              </p>
+            </template>
+          </el-table-column>
+          <el-table-column width="100px" prop="withMsg" label="审批备注">
           </el-table-column>
           <el-table-column
             fixed="right"

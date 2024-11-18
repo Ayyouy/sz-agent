@@ -22,8 +22,8 @@
                 <el-col :span="24">
                   <el-form-item prop="type">
                     <el-radio-group v-model="form.type">
-                      <el-radio :label="0">出金</el-radio>
-                      <el-radio :label="1">转账给他人</el-radio>
+                      <el-radio :label="0">出金111</el-radio>
+                      <el-radio :label="1">转账给他人222</el-radio>
                     </el-radio-group>
                   </el-form-item>
                 </el-col>
@@ -71,7 +71,6 @@
 
 <script>
 import * as api from '@/axios/api'
-import {walletById} from '../../axios/api'
 
 export default {
   props: {},

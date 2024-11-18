@@ -12,23 +12,23 @@
           <i class="el-icon-money"></i>
           <span slot="title">代理中心</span>
         </el-menu-item>
-        <el-submenu index="2">
-          <template slot="title">
-            <i class="el-icon-coin"></i>
-            <span slot="title">数据统计</span>
-          </template>
-          <el-menu-item-group>
-            <router-link to="/statistics?type=1">
-              <el-menu-item index="2-1">股票统计</el-menu-item>
-            </router-link>
-            <router-link to="/statistics?type=2">
-              <el-menu-item index="2-2">指数统计</el-menu-item>
-            </router-link>
-            <router-link to="/statistics?type=3">
-              <el-menu-item index="2-3">期货统计</el-menu-item>
-            </router-link>
-          </el-menu-item-group>
-        </el-submenu>
+        <!--        <el-submenu index="2">-->
+        <!--          <template slot="title">-->
+        <!--            <i class="el-icon-coin"></i>-->
+        <!--            <span slot="title">数据统计</span>-->
+        <!--          </template>-->
+        <!--          <el-menu-item-group>-->
+        <!--            <router-link to="/statistics?type=1">-->
+        <!--              <el-menu-item index="2-1">股票统计</el-menu-item>-->
+        <!--            </router-link>-->
+        <!--            <router-link to="/statistics?type=2">-->
+        <!--              <el-menu-item index="2-2">指数统计</el-menu-item>-->
+        <!--            </router-link>-->
+        <!--            <router-link to="/statistics?type=3">-->
+        <!--              <el-menu-item index="2-3">期货统计</el-menu-item>-->
+        <!--            </router-link>-->
+        <!--          </el-menu-item-group>-->
+        <!--        </el-submenu>-->
         <el-menu-item index="3" @click="$router.push('/userMan')">
           <i class="el-icon-user"></i>
           <span slot="title">用户管理</span>
@@ -37,14 +37,14 @@
           <i class="el-icon-set-up"></i>
           <span slot="title">代理管理</span>
         </el-menu-item>
-        <el-menu-item index="41" @click="$router.push('/agentcyFee')">
+        <el-menu-item index="5" @click="$router.push('/agentcyFee')">
           <i class="el-icon-data-line"></i>
           <span slot="title">交易佣金</span>
         </el-menu-item>
-        <el-menu-item index="5" @click="$router.push('/agentcyFee')">
-          <i class="el-icon-tickets"></i>
-          <span slot="title">返佣明细</span>
-        </el-menu-item>
+        <!--        <el-menu-item index="5" @click="$router.push('/agentcyFee')">-->
+        <!--          <i class="el-icon-tickets"></i>-->
+        <!--          <span slot="title">返佣明细</span>-->
+        <!--        </el-menu-item>-->
         <el-submenu index="6">
           <template slot="title">
             <i class="el-icon-cpu"></i>
@@ -52,23 +52,23 @@
           </template>
           <el-menu-item-group>
             <router-link to="/holdPositions?type=1">
-              <el-menu-item index="6-1">融资持仓单</el-menu-item>
+              <el-menu-item index="6-1">持仓单</el-menu-item>
             </router-link>
             <router-link to="/holdPositions?type=2">
-              <el-menu-item index="6-2">融资平仓单</el-menu-item>
+              <el-menu-item index="6-2">平仓单</el-menu-item>
             </router-link>
-            <router-link to="/holdPositions?type=3">
-              <el-menu-item index="6-3">指数持仓单</el-menu-item>
-            </router-link>
-            <router-link to="/holdPositions?type=4">
-              <el-menu-item index="6-4">指数平仓单</el-menu-item>
-            </router-link>
-            <router-link to="/holdPositions?type=5">
-              <el-menu-item index="6-5">期货持仓单</el-menu-item>
-            </router-link>
-            <router-link to="/holdPositions?type=6">
-              <el-menu-item index="6-6">期货平仓单</el-menu-item>
-            </router-link>
+            <!--            <router-link to="/holdPositions?type=3">-->
+            <!--              <el-menu-item index="6-3">指数持仓单</el-menu-item>-->
+            <!--            </router-link>-->
+            <!--            <router-link to="/holdPositions?type=4">-->
+            <!--              <el-menu-item index="6-4">指数平仓单</el-menu-item>-->
+            <!--            </router-link>-->
+            <!--            <router-link to="/holdPositions?type=5">-->
+            <!--              <el-menu-item index="6-5">期货持仓单</el-menu-item>-->
+            <!--            </router-link>-->
+            <!--            <router-link to="/holdPositions?type=6">-->
+            <!--              <el-menu-item index="6-6">期货平仓单</el-menu-item>-->
+            <!--            </router-link>-->
           </el-menu-item-group>
         </el-submenu>
         <el-menu-item index="7" @click="$router.push('/capitalDetail')">
@@ -84,6 +84,10 @@
           <span slot="title">
             <el-badge :value="outMoneyOrder" class="item-mark">出金记录</el-badge>
           </span>
+        </el-menu-item>
+        <el-menu-item index="10" @click="$router.push('/rebate')">
+          <i class="el-icon-postcard"></i>
+          <span slot="title">返佣明细</span>
         </el-menu-item>
         <el-menu-item index="11" @click="$router.push('/wallet')">
           <i class="el-icon-wallet"></i>

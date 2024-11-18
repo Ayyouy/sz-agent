@@ -7,6 +7,7 @@ import Wallet from '@/pages/money/wallet'
 import Statistics from '@/pages/statistics/index'
 
 import Agent from '@/pages/agent/index'
+import Rebate from '@/pages/agent/index-rebate'
 import Capital from '@/pages/capital/index'
 import AgentcyFee from '@/pages/agentcyFee/index'
 import HoldPositions from '@/pages/holdPositions/index'
@@ -63,6 +64,13 @@ export default new Router({
       // 原利润明细，改为交易佣金
       meta: {title: '交易佣金'},
       component: AgentcyFee
+    },
+    {
+      path: '/rebate',
+      name: 'rebate',
+      // 新增的页面和路由
+      meta: {title: '返佣明细'},
+      component: Rebate
     },
     {
       path: '/capital',

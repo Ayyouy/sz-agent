@@ -48,74 +48,36 @@
           style="width: 100%">
           <el-table-column
             prop="orderSn"
-            width="170px"
+            width="180"
             label="订单号">
-            <template slot-scope="scope">
-              <a class="hide-td" href="javascript:;" :title="scope.row.orderSn">{{ scope.row.orderSn }}</a>
-            </template>
           </el-table-column>
           <el-table-column
-            width="170px"
+            prop="userId"
+            width="80"
+            label="用户id">
+          </el-table-column>
+          <el-table-column
+            width="80"
             prop="nickName"
-            label="用户名/id">
-            <template slot-scope="scope">
-              <p>
-                {{ scope.row.nickName }}
-                <span class="small">
-                {{ scope.row.userId }}
-              </span>
-              </p>
-            </template>
+            label="用户名">
           </el-table-column>
           <el-table-column
-            width="120px"
-            prop="currency"
-            label="货币">
-          </el-table-column>
-          <el-table-column
-            width="120px"
             prop="payChannel"
-            label="充值渠道">
+            label="充值方式">
             <template slot-scope="scope">
-            <span v-if="scope.row.payChannel==0">
-              支付宝
-            </span>
-              <span v-if="scope.row.payChannel==1">
-              银行转账
-            </span>
-              <span v-if="scope.row.payChannel==2">
-              虚拟货币
+            <span>
+              {{scope.row.payChannel==0?'支付宝':scope.row.payChannel==1?'对公转账':'现金转账'}}
             </span>
             </template>
           </el-table-column>
           <el-table-column
-            width="170px"
             prop="payAmt"
-            label="充值金额(本国货币)">
-          </el-table-column>
-          <el-table-column
-            width="120px"
-            prop="rate"
-            label="汇率">
-          </el-table-column>
-          <el-table-column
-            width="120px"
-            prop="realAmt"
             label="充值金额">
           </el-table-column>
           <el-table-column
-            prop="addTime"
-            width="160px"
-            label="申请时间">
-            <template slot-scope="scope">
-            <span>
-              {{ scope.row.addTime }}
-            </span>
-            </template>
-          </el-table-column>
-          <el-table-column
             prop="orderStatus"
-            label="审核状态">
+            width="100px"
+            label="状态">
             <template slot-scope="scope">
               <p>
               <span
@@ -124,23 +86,32 @@
                 <i v-if="scope.row.orderStatus==2" class="iconfont icon-failure"></i>
                 <i v-if="scope.row.orderStatus==3" class="iconfont icon-failure"></i>
                 <i v-if="scope.row.orderStatus==0" class="iconfont icon-dengdai"></i>
-                {{ scope.row.orderStatus == 1 ? '审核成功' : '' }}
-                {{ scope.row.orderStatus == 2 ? '审核失败' : '' }}
-                {{ scope.row.orderStatus == 3 ? '取消' : '' }}
-                {{ scope.row.orderStatus == 0 ? '审核中' : '' }}
+                {{scope.row.orderStatus==1?'成功':scope.row.orderStatus==2?'失败':scope.row.orderStatus==0?'审核中':'取消'}}
               </span>
               </p>
             </template>
           </el-table-column>
           <el-table-column
-            prop="orderDesc"
-            label="审核备注">
+            prop="deType"
+            width="180"
+            label="申请时间">
             <template slot-scope="scope">
             <span>
-              {{ scope.row.orderDesc }}
+              {{scope.row.addTime | timeFormat}}
             </span>
             </template>
           </el-table-column>
+          <el-table-column
+            prop="deType"
+            width="180"
+            label="入金时间">
+            <template slot-scope="scope">
+            <span>
+              {{scope.row.payTime | timeFormat}}
+            </span>
+            </template>
+          </el-table-column>
+
         </el-table>
         <div class="page-box">
           <el-pagination
