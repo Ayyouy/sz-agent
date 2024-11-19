@@ -57,6 +57,16 @@ export function getUserCapitalList(options) {
   return get('/agent/cash/list.do', options)
 }
 
+// 资金记录
+export function getUserCapitalNotes(options) {
+  return get('/api/fundAgentIncome/agentList.do', options)
+}
+
+// 资金记录类型
+export function getUserCapitalTypes(options) {
+  return get('/api/fundAgentIncome/getAllType.do', options)
+}
+
 // 入金记录
 export function getUserComeinList(options) {
   return get('/agent/recharge/list.do', options)

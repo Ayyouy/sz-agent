@@ -89,24 +89,28 @@
           <i class="el-icon-postcard"></i>
           <span slot="title">返佣明细</span>
         </el-menu-item>
-        <el-menu-item index="11" @click="$router.push('/wallet')">
+        <el-menu-item index="11" @click="$router.push('/capitalNote')">
+          <i class="el-icon-box"></i>
+          <span slot="title">资金记录</span>
+        </el-menu-item>
+        <el-menu-item index="12" @click="$router.push('/wallet')">
           <i class="el-icon-wallet"></i>
           <span slot="title">钱包</span>
         </el-menu-item>
-        <el-submenu index="12">
+        <el-submenu index="13">
           <template slot="title">
             <i class="el-icon-receiving"></i>
             <span slot="title">基金记录</span>
           </template>
           <el-menu-item-group>
             <router-link to="/fund?type=1">
-              <el-menu-item index="12-1">持仓列表</el-menu-item>
+              <el-menu-item index="13-1">持仓列表</el-menu-item>
             </router-link>
             <router-link to="/fund?type=2">
-              <el-menu-item index="12-2">赎回列表</el-menu-item>
+              <el-menu-item index="13-2">赎回列表</el-menu-item>
             </router-link>
             <router-link to="/fund?type=3">
-              <el-menu-item index="12-3">我的收益</el-menu-item>
+              <el-menu-item index="13-3">我的收益</el-menu-item>
             </router-link>
           </el-menu-item-group>
         </el-submenu>

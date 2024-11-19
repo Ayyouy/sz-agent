@@ -13,6 +13,7 @@ import AgentcyFee from '@/pages/agentcyFee/index'
 import HoldPositions from '@/pages/holdPositions/index'
 import Fund from '@/pages/fund/index'
 import CapitalDetail from '@/pages/capitalDetail/index'
+import CapitalNote from '@/pages/capitalNote/index'
 import Entry from '@/pages/entry/index'
 import Exit from '@/pages/exit/index'
 import Login from '@/pages/login/index'
@@ -101,6 +102,12 @@ export default new Router({
       name: 'capitalDetail',
       meta: {title: '资金明细'},
       component: CapitalDetail
+    },
+    {
+      path: '/capitalNote',
+      name: 'capitalNote',
+      meta: {title: '资金记录'},
+      component: CapitalNote
     },
     {
       path: '/entry',
