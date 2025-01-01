@@ -172,3 +172,8 @@ export function walletByUser(options) {
 export function walletByCard(options) {
   return get('/api/fundWallet/findByCardNum.do', options)
 }
+
+// 返佣明细列表
+export function getAgentBackList (options) {
+  return get('/admin/position/agentBackList.do', options)
+}

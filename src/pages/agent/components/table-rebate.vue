@@ -1,16 +1,15 @@
 <template>
   <div>
-    <el-card class="box-card">
       <!--  代理返佣明细  -->
       <el-form :inline="true" :model="form" class="demo-form-inline" size="small">
         <el-form-item label="编号">
-          <el-input v-model="form.p1" placeholder="请输入"></el-input>
+          <el-input v-model="form.positionSn" placeholder="请输入"></el-input>
         </el-form-item>
         <el-form-item label="代理名称/ID">
           <el-input v-model="form.agentIdOrName" placeholder="请输入"></el-input>
         </el-form-item>
         <el-form-item label="交易者姓名/ID">
-          <el-input v-model="form.agentIdOrName" placeholder="请输入"></el-input>
+          <el-input v-model="form.userIdOrName" placeholder="请输入"></el-input>
         </el-form-item>
         <el-form-item label="代理等级">
           <el-select clearable filterable v-model="form.agentLevel" placeholder="所有">
@@ -21,16 +20,19 @@
         </el-form-item>
         <el-form-item label="返佣来源">
           <el-select clearable filterable placeholder="所有" value-key="type"
-                     @change="currentSel" v-model="form.type">
-            <el-option v-for="item in types" :key="item.type" :label="item.value" :value="item.type"></el-option>
+                     v-model="form.feeType">
+            <el-option label="入仓手续费" value="1"></el-option>
+            <el-option label="平仓手续费" value="2"></el-option>
+            <el-option label="延递费(留仓费)" value="3"></el-option>
+            <el-option label="分红" value="4"></el-option>
           </el-select>
         </el-form-item>
         <el-form-item label="股票代码">
-          <el-input v-model="form.agentIdOrName" placeholder="请输入"></el-input>
+          <el-input v-model="form.stockCode" placeholder="请输入"></el-input>
         </el-form-item>
         <el-form-item label="市场">
-          <el-select clearable filterable placeholder="所有" value-key="type" v-model="form.type">
-            <el-option v-for="item in types" :key="item.type" :label="item.value" :value="item.type"></el-option>
+          <el-select clearable filterable placeholder="所有" value-key="type" v-model="form.stockPlate">
+            <el-option label="科创" value="1"></el-option>
           </el-select>
         </el-form-item>
         <el-form-item label="交易时间">
@@ -51,29 +53,22 @@
       </el-form>
       <div class="table">
         <el-table
-          ref="elTable"
+          id="table"
           v-loading="loading"
           :data="list.list"
           style="width: 100%">
           <el-table-column
-            prop="orderNum"
+            prop="positionSn"
             label="编号">
-            <template slot-scope="scope">
-              {{ scope.row.orderNum }}
-            </template>
           </el-table-column>
           <el-table-column
-            prop="realName"
-            label="代理姓名">
+            prop="agentName"
+            label="代理姓名/ID">
             <template slot-scope="scope">
-              {{ scope.row.realName }}
-            </template>
-          </el-table-column>
-          <el-table-column
-            prop="agentRealName"
-            label="代理ID">
-            <template slot-scope="scope">
-              {{ scope.row.agentId }}
+              {{ scope.row.agentName }}
+              <span class="small">
+              /{{ scope.row.agentId }}
+            </span>
             </template>
           </el-table-column>
           <el-table-column
@@ -84,10 +79,14 @@
             </template>
           </el-table-column>
           <el-table-column
-            prop="amount"
+            prop="feeType"
             label="返佣来源">
             <template slot-scope="scope">
-              {{ scope.row.amount }}
+              <span v-if="scope.row.feeType==1">入仓手续费</span>
+              <span v-else-if="scope.row.feeType==2">平仓手续费</span>
+              <span v-else-if="scope.row.feeType==3">延递费(留仓费)</span>
+              <span v-else-if="scope.row.feeType==4">分红</span>
+              <span v-else>未知</span>
             </template>
           </el-table-column>
           <el-table-column
@@ -114,11 +113,8 @@
             </template>
           </el-table-column>
           <el-table-column
-            prop="addTime"
+            prop="rate"
             label="汇率">
-            <template slot-scope="scope">
-              {{ scope.row.addTime | timeFormat }}
-            </template>
           </el-table-column>
           <el-table-column
             prop="type"
@@ -149,18 +145,12 @@
             </template>
           </el-table-column>
           <el-table-column
-            prop="type"
+            prop="stockPlate"
             label="市场">
-            <template slot-scope="scope">
-              {{ scope.row.type }}
-            </template>
           </el-table-column>
           <el-table-column
-            prop="type"
+            prop="stockCode"
             label="股票代码">
-            <template slot-scope="scope">
-              {{ scope.row.type }}
-            </template>
           </el-table-column>
           <el-table-column
             prop="type"
@@ -177,18 +167,15 @@
             </template>
           </el-table-column>
           <el-table-column
-            prop="type"
+            prop="buyOrderPrice"
             label="实际买入价格">
             <template slot-scope="scope">
-              {{ scope.row.type }}
+              {{ Number(scope.row.buyOrderPrice).toFixed(2) }}
             </template>
           </el-table-column>
           <el-table-column
-            prop="type"
+            prop="orderNum"
             label="数量">
-            <template slot-scope="scope">
-              {{ scope.row.type }}
-            </template>
           </el-table-column>
           <el-table-column
             prop="type"
@@ -205,10 +192,10 @@
             </template>
           </el-table-column>
           <el-table-column
-            prop="type"
+            prop="buyOrderTime"
             label="交易时间">
             <template slot-scope="scope">
-              {{ scope.row.type }}
+              {{ scope.row.buyOrderTime|timeFormat }}
             </template>
           </el-table-column>
         </el-table>
@@ -217,22 +204,20 @@
             class="pull-right"
             @size-change="handleSizeChange"
             @current-change="handleCurrentChange"
-            :current-page="list.pageNum"
+            :current-page="form.pageNum"
             :page-sizes="[10, 20, 30, 40,50]"
-            :page-size="list.pageSize"
+            :page-size="form.pageSize"
             layout="total, sizes, prev, pager, next, jumper"
             :total="list.total">
           </el-pagination>
         </div>
       </div>
-    </el-card>
   </div>
 </template>
 
 <script>
 import * as api from '@/axios/api'
-import * as epi from 'xlsx'
-import {saveAs} from 'file-saver'
+import * as XLSX from 'xlsx'
 
 export default {
   data () {
@@ -270,21 +255,20 @@ export default {
         userIdOrName: '',
         agentIdOrName: '',
         agentLevel: '',
-        orderNum: '',
+        stockPlate: '',
+        stockCode: '',
         rangeTime: '',
-        type: ''
+        positionSn: '',
+        feeType: ''
       },
       list: {
         list: []
       },
-      types: [],
-      detail: {},
       loading: false
     }
   },
   mounted () {
-    // this.getTypes()
-    // this.getList()
+    this.getList()
   },
   methods: {
     handleSizeChange (val) {
@@ -300,27 +284,33 @@ export default {
       this.getList()
     },
     onExport () {
-      const fileName = 'rebate-page-' + this.form.pageNum + '.xlsx'
-      // 获取表格的DOM元素
-      const elTable = this.$refs.elTable
-      const wb = epi.utils.table_to_book(elTable.$el)
-      const wbout = epi.write(wb, {bookType: 'xlsx', bookSST: true, type: 'array'})
-      try {
-        // 导出Excel文件，fileName为自定义的文件名
-        saveAs(new Blob([wbout], {type: 'application/octet-stream'}), fileName)
-      } catch (e) {
-        if (typeof console !== 'undefined') console.error(e, wbout)
+      // element-ui 表格中的 fixed 属性会导致多出一个 table，进而导致下载重复内容，所以这里需要删除掉
+      // 由于 fixed 有两种形式：left(默认)或right，所以要进行两种类型的删除
+      // let table = this.$refs.elTable
+      let table = document.getElementById('table').cloneNode(true)
+      if (table.querySelector('.el-table__fixed') != null) {
+        table.removeChild(table.querySelector('.el-table__fixed'))
       }
-      return wbout
-    },
-    async getTypes () {
-      // let data = await api.getFinancialTypes()
-      let data = {}
-      if (data.status === 0) {
-        this.types = data.data
-      } else {
-        this.$message.error(data.msg)
+      if (table.querySelector('.el-table__fixed-right') != null) {
+        table.removeChild(table.querySelector('.el-table__fixed-right'))
       }
+      let header = table.querySelector('.el-table__header-wrapper')
+      let body = table.querySelector('.el-table__body-wrapper')
+      let th = header.childNodes[0].querySelectorAll('th')
+      for (let key in th) {
+        if (th[key].innerText === '操作') {
+          th[key].remove()
+        }
+      }
+      let td = body.childNodes[0].childNodes[1].querySelectorAll('td')
+      for (let key = 0; key < td.length; key++) {
+        if (td[key].querySelectorAll('.el-button').length > 0) {
+          td[key].remove()
+        }
+      }
+      const fileName = 'RebatePage' + this.form.pageNum + '.xlsx'
+      let wb = XLSX.utils.table_to_book(table, {raw: true})
+      XLSX.writeFile(wb, fileName)
     },
     async getList () {
       if (this.loading) {
@@ -334,13 +324,14 @@ export default {
         userIdOrName: this.form.userIdOrName,
         agentIdOrName: this.form.agentIdOrName,
         agentLevel: this.form.agentLevel,
+        stockPlate: this.form.stockPlate,
+        stockCode: this.form.stockCode,
         buyTimeStart: this.form.rangeTime ? this.form.rangeTime[0] : null,
         buyTimeEnd: this.form.rangeTime ? this.form.rangeTime[1] : null,
-        orderNum: this.form.orderNum,
-        type: this.form.type
+        positionSn: this.form.positionSn,
+        feeType: this.form.feeType
       }
-      // let data = await api.financial(opts)
-      let data = {}
+      let data = await api.getAgentBackList(opts)
       if (data.status === 0) {
         this.list.total = data.data.total
         this.list.list = data.data.records
@@ -348,33 +339,6 @@ export default {
         this.$message.error(data.msg)
       }
       this.loading = false
-    },
-    currentSel (val) {
-      this.form.type = val
-    },
-    timeFormatTiString (val) {
-      let fmt = 'yyyy-MM-dd hh:mm:ss'
-      if (!val) {
-        return
-      }
-      let date = new Date(val)
-      if (/(y+)/.test(fmt)) {
-        fmt = fmt.replace(RegExp.$1, (date.getFullYear() + '').substr(4 - RegExp.$1.length))
-      }
-      let o = {
-        'M+': date.getMonth() + 1,
-        'd+': date.getDate(),
-        'h+': date.getHours(),
-        'm+': date.getMinutes(),
-        's+': date.getSeconds()
-      }
-      for (let k in o) {
-        if (new RegExp(`(${k})`).test(fmt)) {
-          let str = o[k] + ''
-          fmt = fmt.replace(RegExp.$1, (RegExp.$1.length === 1) ? str : this.padLeftZero(str))
-        }
-      }
-      return fmt
     }
   }
 }

@@ -37,10 +37,10 @@
           <i class="el-icon-set-up"></i>
           <span slot="title">代理管理</span>
         </el-menu-item>
-        <el-menu-item index="5" @click="$router.push('/agentcyFee')">
-          <i class="el-icon-data-line"></i>
-          <span slot="title">交易佣金</span>
-        </el-menu-item>
+<!--        <el-menu-item index="5" @click="$router.push('/agentcyFee')">-->
+<!--          <i class="el-icon-data-line"></i>-->
+<!--          <span slot="title">交易佣金</span>-->
+<!--        </el-menu-item>-->
         <!--        <el-menu-item index="5" @click="$router.push('/agentcyFee')">-->
         <!--          <i class="el-icon-tickets"></i>-->
         <!--          <span slot="title">返佣明细</span>-->
